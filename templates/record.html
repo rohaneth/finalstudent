@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+    <head>
+        <title>List of Persons</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f9f9f9;
+                margin: 20px;
+            }
+
+            h2, h3 {
+                text-align: center;
+            }
+
+            h2 {
+                color: #333;
+            }
+
+            h3 {
+                color: red;
+            }
+
+            hr {
+                border: none;
+                height: 5px;
+                background-color: green;
+            }
+
+            .btn {
+                margin: 5px;
+            }
+
+            table {
+                width: 80%;
+                margin: 20px auto;
+                border-collapse: collapse;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            }
+
+            th, td {
+                padding: 10px;
+                text-align: center;
+                border: 2px solid #ddd;
+            }
+
+            th {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            tr:hover {
+                background-color: #ddd;
+            }
+
+            .myTable th {
+                background-color: lightblue;
+                color: red;
+            }
+
+            .myTable1 th {
+                background-color: goldenrod;
+                color: white;
+            }
+
+            .action-buttons {
+                display: flex;
+                gap: 5px;
+                justify-content: center;
+            }
+
+            .action-buttons form {
+                margin: 0;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h2>WELCOME TO</h2>
+        <h3>Developed Under the Guidance of SHRI. P. . INDIA.</h3>
+        <hr>
+
+        <div style="text-align: center; margin-bottom: 20px;">
+            <a href="{% url 'create_student' %}" class="btn btn-primary btn-sm">Create Student</a>
+            <a href="{% url 'create_country' %}" class="btn btn-primary btn-sm">Create Country</a>
+            <a href="{% url 'create_city' %}" class="btn btn-primary btn-sm">Create City</a>
+        </div>
+
+        <table class="myTable">
+            <tr>
+                <th>User Names</th>
+                <th>Student Name</th>
+                <th>City</th>
+                <th>Address</th>
+                <th>Branch</th>
+                <th>Education</th>
+                <th>Experience</th>
+                <th>Actions</th>
+            </tr>
+            {% for entry in stud12 %}
+            <tr>
+                <td>{{ entry.user }}</td>
+                <td>{{ entry.student_name }}</td>
+                <td>{{ entry.city }}</td>
+                <td>{{ entry.address }}</td>
+                <td>{{ entry.branch }}</td>
+                <td>{{ entry.education }}</td>
+                <td>{{ entry.experience }}</td>
+                <td>
+                    <div class="action-buttons">
+                        <a href="{% url 'edit_user' entry.id %}" class="btn btn-primary btn-sm">Edit</a>
+                        <form action="{% url 'delete_user' entry.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <hr>
+
+        <table class="myTable1">
+            <tr>
+                <th>City Name</th>
+                <th>Country</th>
+            </tr>
+            {% for entry1 in city12 %}
+            <tr>
+                <td>
+                    {{ entry1.city_name }}
+                    <a href="{% url 'edit_city' entry1.id %}" class="btn btn-primary btn-sm">Edit</a>
+                    <a href="{% url 'delete_city' entry1.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+                <td>
+                    {{ entry1.country }}
+                    <a href="{% url 'delete_country' entry1.country %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
