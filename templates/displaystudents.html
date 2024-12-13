@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container py-4">
+        <!-- Navigation Buttons -->
+        <div class="d-flex justify-content-center gap-2 mb-4">
+            <a href="{% url 'create_student' %}" class="btn btn-primary">Create Student</a>
+            <a href="{% url 'create_country' %}" class="btn btn-primary">Create Country</a>
+            <a href="{% url 'create_city' %}" class="btn btn-primary">Create City</a>
+        </div>
+
+        <!-- Search Form -->
+        <form method="get" class="mb-3">
+            <div class="row">
+                <div class="col-md-10">
+                    <input type="text" name="search" class="form-control" placeholder="Search students..." value="{{ request.GET.search }}">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">Search</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Student Details Table -->
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white text-center">
+                <h5 class="mb-0">Student Details</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <!-- Add sorting links to each column -->
+                            <th scope="col">
+                                <a href="?{{ request.GET.urlencode|slice:':-6' }}&sort=user" class="text-white text-decoration-none">
+                                    User Names <span>⬍</span>
+                                </a>
+                            </th>
+                            <th scope="col">
+                                <a href="?{{ request.GET.urlencode|slice:':-6' }}&sort=student_name" class="text-white text-decoration-none">
+                                    Student Name <span>⬍</span>
+                                </a>
+                            </th>
+                            <th scope="col">
+                                <a href="?{{ request.GET.urlencode|slice:':-6' }}&sort=city" class="text-white text-decoration-none">
+                                    City <span>⬍</span>
+                                </a>
+                            </th>
+                            <th scope="col">Address</th>
+                            <th scope="col">
+                                <a href="?{{ request.GET.urlencode|slice:':-6' }}&sort=branch" class="text-white text-decoration-none">
+                                    Branch <span>⬍</span>
+                                </a>
+                            </th>
+                            <th scope="col">
+                                <a href="?{{ request.GET.urlencode|slice:':-6' }}&sort=education" class="text-white text-decoration-none">
+                                    Education <span>⬍</span>
+                                </a>
+                            </th>
+                            <th scope="col">
+                                <a href="?{{ request.GET.urlencode|slice:':-6' }}&sort=experience" class="text-white text-decoration-none">
+                                    Experience <span>⬍</span>
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in student %}
+                        <tr>
+                            <td>{{ entry.user }}</td>
+                            <td>{{ entry.student_name }}</td>
+                            <td>{{ entry.city }}</td>
+                            <td>{{ entry.address }}</td>
+                            <td>{{ entry.branch }}</td>
+                            <td>{{ entry.education }}</td>
+                            <td>{{ entry.experience }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center">No students found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
